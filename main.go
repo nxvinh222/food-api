@@ -11,22 +11,6 @@ type result struct {
 	routineId int
 }
 
-func Crawl(id int, url chan int, res chan result) {
-	for {
-		r := result{
-			body: <-url,
-			routineId: id,
-		}
-		// Simulate crawl
-		// Random 1->10
-		rand.Seed(time.Now().UnixNano())
-		random := time.Duration(rand.Intn(9) + 1)
-		time.Sleep(random*time.Millisecond)
-
-		res <- r
-	}
-}
-
 func main() {
 	maxUrl := 1000
 	maxRoutines := 5
@@ -54,6 +38,22 @@ func main() {
 		urlChannel <- u
 	}
 	time.Sleep(1*time.Second)
+}
+
+func Crawl(id int, url chan int, res chan result) {
+	for {
+		r := result{
+			body: <-url,
+			routineId: id,
+		}
+		// Simulate crawl
+		// Random 1->10
+		rand.Seed(time.Now().UnixNano())
+		random := time.Duration(rand.Intn(9) + 1)
+		time.Sleep(random*time.Millisecond)
+
+		res <- r
+	}
 }
 
 
