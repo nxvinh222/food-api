@@ -11,9 +11,9 @@ type result struct {
 }
 
 func Crawl(id int, url chan int, res chan result) {
-	for u := range url{
+	for {
 		r := result{
-			body: u,
+			body: <-url,
 			routineId: id,
 		}
 		res <- r
@@ -21,7 +21,7 @@ func Crawl(id int, url chan int, res chan result) {
 }
 
 func main() {
-	maxUrl := 10
+	maxUrl := 1000
 	maxRoutines := 5
 
 	var urls = make([]int, maxUrl)
