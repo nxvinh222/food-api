@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -16,6 +17,12 @@ func Crawl(id int, url chan int, res chan result) {
 			body: <-url,
 			routineId: id,
 		}
+		// Simulate crawl
+		// Random 1->10
+		rand.Seed(time.Now().UnixNano())
+		random := time.Duration(rand.Intn(9) + 1)
+		time.Sleep(random*time.Millisecond)
+
 		res <- r
 	}
 }
