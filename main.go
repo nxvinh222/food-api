@@ -41,9 +41,9 @@ func main() {
 }
 
 func Crawl(id int, url chan int, res chan result) {
-	for {
+	for u := range url{
 		r := result{
-			body: <-url,
+			body: u,
 			routineId: id,
 		}
 		// Simulate crawl
