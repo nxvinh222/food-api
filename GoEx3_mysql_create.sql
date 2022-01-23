@@ -1,6 +1,7 @@
 CREATE TABLE `restaurants` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255) NOT NULL,
+	`location` VARCHAR(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -18,7 +19,10 @@ CREATE TABLE `categories` (
 
 CREATE TABLE `food` (
 	`id` INT NOT NULL AUTO_INCREMENT,
+	`restaurants_id` INT NOT NULL,
 	`name` VARCHAR(255) NOT NULL,
+	`price` FLOAT NOT NULL,
+	`description` VARCHAR(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -53,6 +57,8 @@ CREATE TABLE `users_food` (
 ALTER TABLE `restaurants_categories` ADD CONSTRAINT `restaurants_categories_fk0` FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`);
 
 ALTER TABLE `restaurants_categories` ADD CONSTRAINT `restaurants_categories_fk1` FOREIGN KEY (`restaurant_id`) REFERENCES `restaurants`(`id`);
+
+ALTER TABLE `food` ADD CONSTRAINT `food_fk0` FOREIGN KEY (`restaurants_id`) REFERENCES `restaurants`(`id`);
 
 ALTER TABLE `food_categories copy` ADD CONSTRAINT `food_categories copy_fk0` FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`);
 
