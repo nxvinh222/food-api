@@ -5,6 +5,7 @@ Từ UI cho trước, hãy viết thử một user story cho màn hình home scr
 ## User story for homescreen
 - As an user, I can see featured restaurants.
 - As an user, I can see featured food.
+- An an user, I can see food and restaurants rating.
 - As an user, I can browse food and restaurants by category.
 - As an user, I can browse food and restaurants by name.
 - As an user, I can like food and restaurants.
