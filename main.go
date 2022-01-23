@@ -13,7 +13,6 @@ type result struct {
 
 func main() {
 	maxUrl := 1000
-	maxRoutines := 5
 
 	var urls = make([]int, maxUrl)
 
@@ -24,9 +23,11 @@ func main() {
 		urls[i] = i
 	}
 
-	for i := 1; i <= maxRoutines; i++ {
-		go Crawl(i, urlChannel, resChannel)
-	}
+	go Crawl(1, urlChannel, resChannel)
+	go Crawl(2, urlChannel, resChannel)
+	go Crawl(3, urlChannel, resChannel)
+	go Crawl(4, urlChannel, resChannel)
+	go Crawl(5, urlChannel, resChannel)
 
 	go func() {
 		for r := range resChannel {
