@@ -1,38 +1,36 @@
 CREATE TABLE `restaurants` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(50) NOT NULL,
+	`name` VARCHAR(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `restaurants_categories` (
 	`category_id` INT NOT NULL,
 	`restaurant_id` INT NOT NULL,
-	`name` VARCHAR(255),
 	PRIMARY KEY (`category_id`,`restaurant_id`)
 );
 
 CREATE TABLE `categories` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(50) NOT NULL,
+	`name` VARCHAR(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `food` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(50) NOT NULL,
+	`name` VARCHAR(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `food_categories copy` (
 	`category_id` INT NOT NULL,
 	`food_id` INT NOT NULL,
-	`name` VARCHAR(255),
 	PRIMARY KEY (`category_id`,`food_id`)
 );
 
 CREATE TABLE `users` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(50) NOT NULL,
+	`name` VARCHAR(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
