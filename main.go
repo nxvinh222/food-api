@@ -14,6 +14,10 @@ type Restaurant struct {
 	Addr string `json:"address" gorm:"column:addr;"`
 }
 
+type RestaurantUpdate struct {
+	Addr *string `json:"address" gorm:"column:addr;"`
+}
+
 func (Restaurant) TableName() string {
 	return "restaurants"
 }
@@ -39,8 +43,12 @@ func main() {
 	if err := db.Table(Restaurant{}.TableName()).Where("id = 2").Delete(nil); err != nil {
 		fmt.Println(err)
 	}
-	
+
 	db.Table(Restaurant{}.TableName()).Where("id = 4").Updates(map[string]interface{}{
-		"name": "lotteria",
+		"name": "",
+		"addr": "nct",
 	})
+
+	newName := ""
+	db.Table(Restaurant{}.TableName()).Where("id = 5").Updates(&RestaurantUpdate{Addr: &newName})
 }
