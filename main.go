@@ -26,8 +26,21 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	newRestaurant := Restaurant{Name: "cowboy jack", Addr: "Vincom"}
-	db.Create(&newRestaurant)
+	newRestaurant := Restaurant{Name: "KFC", Addr: "nguyen hong"}
+	if err := db.Create(&newRestaurant); err != nil {
+		fmt.Println(err)
+	}
 
-	fmt.Println(newRestaurant)
+	var restaurants []Restaurant
+
+	db.Where("name = ?", "KFC").Find(&restaurants)
+	fmt.Println(restaurants)
+
+	if err := db.Table(Restaurant{}.TableName()).Where("id = 2").Delete(nil); err != nil {
+		fmt.Println(err)
+	}
+	
+	db.Table(Restaurant{}.TableName()).Where("id = 4").Updates(map[string]interface{}{
+		"name": "lotteria",
+	})
 }
