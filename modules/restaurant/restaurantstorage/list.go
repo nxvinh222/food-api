@@ -16,7 +16,7 @@ func (s *sqlStore) ListDataByCondition(ctx context.Context,
 
 	db := s.db
 
-	db = db.Table(restaurantmodel.Restaurant{}.TableName()).Where(conditions)
+	db = db.Table(restaurantmodel.Restaurant{}.TableName()).Where(conditions).Where("status in (1)")
 
 	if f := filter; f != nil {
 		if f.CityId > 0 {
@@ -26,7 +26,7 @@ func (s *sqlStore) ListDataByCondition(ctx context.Context,
 
 	err := db.Count(&paging.Total).Error
 	if err != nil {
-		return nil, err
+		return nil, common.ErrDB(err)
 	}
 
 	err = db.
@@ -35,7 +35,7 @@ func (s *sqlStore) ListDataByCondition(ctx context.Context,
 		Order("id desc").
 		Find(&result).Error
 	if err != nil {
-		return nil, err
+		return nil, common.ErrDB(err)
 	}
 
 	return result, nil

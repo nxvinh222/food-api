@@ -10,7 +10,7 @@ import (
 	"strconv"
 )
 
-func GetRestaurant(ctx component.AppContext) gin.HandlerFunc {
+func DeleteRestaurant(ctx component.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))
 
@@ -19,15 +19,13 @@ func GetRestaurant(ctx component.AppContext) gin.HandlerFunc {
 		}
 
 		store := restaurantstorage.NewSQLStore(ctx.GetMainDBConnection())
-		biz := restaurantbiz.NewGetRestaurantBiz(store)
+		biz := restaurantbiz.NewDeleteRestaurantBiz(store)
 
-		result, err := biz.GetRestaurant(c.Request.Context(), id)
-
+		err = biz.DeleteRestaurant(c.Request.Context(), id)
 		if err != nil {
 			panic(err)
 		}
 
-		c.JSON(http.StatusOK, common.SimpleSuccessResponse(result))
-
+		c.JSON(http.StatusOK, common.SimpleSuccessResponse("true"))
 	}
 }
