@@ -1,6 +1,7 @@
 package gin_upload
 
 import (
+	"fmt"
 	"food-delivery/common"
 	"food-delivery/component"
 	"food-delivery/modules/upload/uploadbusiness"
@@ -34,8 +35,13 @@ func Upload(appCtx component.AppContext) gin.HandlerFunc {
 		}
 
 		biz := uploadbusiness.NewUploadBiz(appCtx.GetUploadProvider(), nil)
-		biz.Upload(c.Request.Context(), dataBytes, folder, fileHeader.Filename)
+		img, err := biz.Upload(c.Request.Context(), dataBytes, folder, fileHeader.Filename)
 
-		c.JSON(http.StatusOK, common.SimpleSuccessResponse(true))
+		if err != nil {
+			fmt.Printf("[ERROR] Cannot upload image %s\n", err)
+			panic(err)
+		}
+
+		c.JSON(http.StatusOK, common.SimpleSuccessResponse(img))
 	}
 }

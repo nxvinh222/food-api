@@ -8,6 +8,8 @@ import (
 	"food-delivery/component/uploadprovider"
 	"food-delivery/modules/upload/uploadmodel"
 	"image"
+	_ "image/jpeg"
+	_ "image/png"
 	"io"
 	"log"
 	"path/filepath"
