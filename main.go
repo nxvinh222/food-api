@@ -4,6 +4,7 @@ import (
 	"food-delivery/component"
 	"food-delivery/middleware"
 	"food-delivery/modules/restaurant/restauranttransport/ginrestaurant"
+	"food-delivery/modules/upload/uploadtransport/gin_upload"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -13,7 +14,7 @@ import (
 )
 
 func main() {
-	dsn := os.Getenv("DBConnectionStr")
+	dsn := os.Getenv("DBConnectionStrAWS")
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalln(err)
@@ -39,6 +40,8 @@ func runService(db *gorm.DB) error {
 	})
 
 	// CRUD
+
+	r.POST("/upload", gin_upload.Upload(appCtx))
 
 	restaurants := r.Group("/restaurants")
 	{
