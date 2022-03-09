@@ -5,6 +5,7 @@ import (
 	"food-delivery/component/uploadprovider"
 	"food-delivery/middleware"
 	"food-delivery/modules/restaurant/restauranttransport/ginrestaurant"
+	"food-delivery/modules/restaurantlike/transport/ginrestaurantlike"
 	"food-delivery/modules/upload/uploadtransport/gin_upload"
 	"food-delivery/modules/user/usertransport/ginuser"
 	"github.com/gin-gonic/gin"
@@ -32,6 +33,8 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	db = db.Debug()
 
 	appCtx := component.NewAppContext(db, s3Provider, secretKey)
 	err = runService(appCtx)
@@ -69,6 +72,8 @@ func runService(appCtx component.AppContext) error {
 		restaurants.GET("/:id", ginrestaurant.GetRestaurant(appCtx))
 		restaurants.PATCH("/:id", ginrestaurant.UpdateRestaurant(appCtx))
 		restaurants.DELETE("/:id", ginrestaurant.DeleteRestaurant(appCtx))
+
+		restaurants.GET("/:id/liked-users", ginrestaurantlike.ListUser(appCtx))
 	}
 
 	return r.Run()

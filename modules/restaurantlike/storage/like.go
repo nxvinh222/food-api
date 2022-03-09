@@ -11,7 +11,7 @@ type likeStore struct {
 	Count        int `gorm:"column:count;"`
 }
 
-func (s *SqlStore) GetRestaurantLike(ctx context.Context, ids []int) (map[int]int, error) {
+func (s *sqlStore) GetRestaurantLike(ctx context.Context, ids []int) (map[int]int, error) {
 	likeMap := make(map[int]int)
 
 	var likeList []likeStore

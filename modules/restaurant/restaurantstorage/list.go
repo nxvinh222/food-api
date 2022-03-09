@@ -29,6 +29,11 @@ func (s *sqlStore) ListDataByCondition(ctx context.Context,
 		return nil, common.ErrDB(err)
 	}
 
+	// Count must execute BEFORE preload
+	for i := range moreKeys {
+		db.Preload(moreKeys[i])
+	}
+
 	if c := paging.FakeCursor; c != "" {
 		if uid, err := common.FromBase58(c); err == nil {
 			db.Where("id < ?", uid.GetLocalID())
