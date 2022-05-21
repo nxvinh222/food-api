@@ -13,8 +13,8 @@ type Restaurant struct {
 	Name            string             `json:"name" gorm:"column:name;"`
 	UserId          int                `json:"-" gorm:"column:owner_id;"`
 	Addr            string             `json:"address" gorm:"column:addr;"`
-	Logo            *common.Image      `json:"logo" gorm:"column:logo"`
-	Cover           *common.Images     `json:"cover" gorm:"column:cover"`
+	//Logo            *common.Image      `json:"logo" gorm:"column:logo"`
+	//Cover           *common.Images     `json:"cover" gorm:"column:cover"`
 	User            *common.SimpleUser `json:"user"`
 	LikeCount       int                `json:"like_count" gorm:"-"`
 }
@@ -26,8 +26,8 @@ func (Restaurant) TableName() string {
 type RestaurantUpdate struct {
 	Name  *string        `json:"name" gorm:"column:name"`
 	Addr  *string        `json:"address" gorm:"column:addr"`
-	Logo  *common.Image  `json:"logo" gorm:"column:logo"`
-	Cover *common.Images `json:"cover" gorm:"column:cover"`
+	//Logo  *common.Image  `json:"logo" gorm:"column:logo"`
+	//Cover *common.Images `json:"cover" gorm:"column:cover"`
 }
 
 func (RestaurantUpdate) TableName() string {
@@ -39,8 +39,8 @@ type RestaurantCreate struct {
 	Name            string         `json:"name" gorm:"column:name"`
 	Addr            string         `json:"address" gorm:"column:addr"`
 	UserId          int            `json:"-" gorm:"column:owner_id;"`
-	Logo            *common.Image  `json:"logo" gorm:"column:logo"`
-	Cover           *common.Images `json:"cover" gorm:"column:cover"`
+	//Logo            *common.Image  `json:"logo" gorm:"column:logo"`
+	//Cover           *common.Images `json:"cover" gorm:"column:cover"`
 }
 
 func (RestaurantCreate) TableName() string {

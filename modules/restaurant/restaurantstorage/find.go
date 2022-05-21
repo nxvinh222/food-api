@@ -16,6 +16,8 @@ func (s *sqlStore) FindDataByCondition(
 
 	db := s.db
 
+	db = db.Table(restaurantmodel.Restaurant{}.TableName()).Where(conditions).Where("status in (1)")
+
 	for i := range moreKeys {
 		db.Preload(moreKeys[i])
 	}

@@ -5,8 +5,10 @@ import (
 	"food-delivery/component/uploadprovider"
 	"food-delivery/middleware"
 	"food-delivery/modules/restaurant/restauranttransport/ginrestaurant"
+	restaurantlikemodel "food-delivery/modules/restaurantlike/model"
 	"food-delivery/modules/restaurantlike/transport/ginrestaurantlike"
 	"food-delivery/modules/upload/uploadtransport/gin_upload"
+	"food-delivery/modules/user/usermodel"
 	"food-delivery/modules/user/usertransport/ginuser"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -36,6 +38,11 @@ func main() {
 
 	db = db.Debug()
 
+	err = migrateDB(db)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	appCtx := component.NewAppContext(db, s3Provider, secretKey)
 	err = runService(appCtx)
 	if err != nil {
@@ -58,7 +65,7 @@ func runService(appCtx component.AppContext) error {
 
 	// CRUD
 
-	v1 := r.Group("/v1")
+	v1 := r.Group("/api/v1")
 
 	v1.POST("/register", ginuser.Register(appCtx))
 	v1.POST("/login", ginuser.Login(appCtx))
@@ -76,15 +83,25 @@ func runService(appCtx component.AppContext) error {
 		restaurants.GET("/:id/liked-users", ginrestaurantlike.ListUser(appCtx))
 	}
 
-	return r.Run()
+	return r.Run(":5600")
 }
 
-type Restaurant struct {
-	ID   int    `json:"id,omitempty" gorm:"column:id;"`
-	Name string `json:"name" gorm:"column:name;"`
-	Addr string `json:"address" gorm:"column:addr;"`
-}
+func migrateDB(db *gorm.DB) error {
+	//db.Migrator().DropTable(usermodel.User{})
+	//db.Migrator().DropTable(recipemodel.Recipe{})
+	//db.Migrator().DropTable(elementmodel.Element{})
 
-func (Restaurant) TableName() string {
-	return "restaurants"
+	err := db.AutoMigrate(usermodel.User{})
+	if err != nil {
+		return err
+	}
+	//err = db.AutoMigrate(restaurantmodel.Restaurant{})
+	//if err != nil {
+	//	return err
+	//}
+	err = db.AutoMigrate(restaurantlikemodel.Like{})
+	if err != nil {
+		return err
+	}
+	return nil
 }
